@@ -20,6 +20,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Setup MySql
+        run: |
+          sudo systemctl start mysql
+          cp .env.sample .env
+
+      - name: Create test Database
+        run: |
+          sudo mysql < db/create-db.sql
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:

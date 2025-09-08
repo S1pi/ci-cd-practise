@@ -31,7 +31,7 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
           --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -51,14 +51,25 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+
       - name: wait for DB
-        run: npx wait-on tcp:3306
+        env:
+          MYSQL_PWD: ${{ secrets.DB_ROOT_PASSWORD }}
+        run: |
+          for i in {1..30}; do
+            if mysql -h 127.0.0.1 -uroot -e "SELECT 1;" >/dev/null 2>&1; then
+              echo "MySQL ready"
+              break
+            fi
+            echo "Waiting MySQL ($i/30)..."
+            sleep 2
+          done
 
       - name: Initialize DB
         env:
           MYSQL_PWD: ${{ secrets.DB_ROOT_PASSWORD }}
         run: |
-          mysql -h 127.0.0.1 -uroot -p$$MYSQL_PWD < db/create-db.sql
+          mysql -h 127.0.0.1 -uroot "${{ secrets.DB_NAME }}" < db/create-db.sql
 
       - name: Create env for app
         run: |

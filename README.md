@@ -9,7 +9,7 @@ Toteutin harjoituksen seuraavat workflow lisäykset:
 - **Integraatiotestit** ajetaan CI:ssä erikseen unit-testien lisäksi.
 
 Lisänä kuva secreteistä:
-![GitHub Secrets Screenshot](docs/ghsecrets.png)
+![GitHub Secrets Screenshot](images/ghsecrets.png)
 
 # OPEN OHJEET:
 

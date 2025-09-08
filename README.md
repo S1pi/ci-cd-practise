@@ -1,6 +1,6 @@
 ## CI/CD – Omat lisätoiminnallisuudet
 
-Toteutin harjoituksen ohjeiden pohjalta, mutta lisäsin muutamia juttuja omaan workflowon:
+Toteutin harjoituksen seuraavat workflow lisäykset:
 
 - **MySQL ajetaan service-konttina** GitHub Actionsissa (`mysql:8.4`), ei runnerin valmiilla `systemctl`-käynnistyksellä. Tämä tekee ympäristöstä puhtaamman ja toistettavamman.
 - **Tietokannan skeeman initointi** tapahtuu ajamalla `db/create-db.sql` CI-putkessa ennen testejä. Lisäsin myös pienen odotussilmukan, että MySQL ehtii varmasti käynnistyä ennen kuin skeema ajetaan.

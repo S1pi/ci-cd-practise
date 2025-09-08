@@ -27,7 +27,7 @@ jobs:
 
       - name: Create test Database
         run: |
-          sudo mysql < db/create-db.sql
+          mysql -u root -p root < db/create-db.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
